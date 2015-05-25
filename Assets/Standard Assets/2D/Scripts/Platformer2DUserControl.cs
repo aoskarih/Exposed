@@ -17,9 +17,10 @@ namespace UnityStandardAssets._2D
 		private void Update() {
 			m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 			crouch = Input.GetKey(KeyCode.LeftControl);
-			float h = CrossPlatformInputManager.GetAxis("Horizontal");
+			float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+			float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
-			m_Character.Move(h, crouch, m_Jump);
+			m_Character.Move(h, crouch, m_Jump, v);
 		}
 	}
 }

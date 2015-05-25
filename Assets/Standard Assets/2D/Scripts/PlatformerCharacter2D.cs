@@ -8,13 +8,16 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 10f;                  // Amount of force added when the player jumps.
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
-        [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
+		[SerializeField]private float m_LadderClimbSpeed = 8f;
+		[SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
-		private bool m_didDoubleJump;
+		private bool m_DidDoubleJump;
+		private bool m_CanClimb;
+		private bool m_ClimbingLadder;
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
         private Animator m_Anim;            // Reference to the player's animator component.
@@ -40,7 +43,7 @@ namespace UnityStandardAssets._2D
             {
 				if (colliders[i].gameObject != gameObject) {
 					m_Grounded = true;
-					m_didDoubleJump = false;
+					m_DidDoubleJump = false;
 				}
             }
             m_Anim.SetBool("Ground", m_Grounded);
@@ -51,7 +54,7 @@ namespace UnityStandardAssets._2D
         }
 
 
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(float move, bool crouch, bool jump, float climb)
         {
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
@@ -75,6 +78,21 @@ namespace UnityStandardAssets._2D
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
+				if (m_CanClimb && climb != 0) {
+					m_ClimbingLadder = true;
+
+					if (climb < 0 && m_Grounded) {
+
+					}
+				}
+
+				if (m_ClimbingLadder) {
+					m_Rigidbody2D.velocity = Vector2.up * climb * m_LadderClimbSpeed;
+					m_Rigidbody2D.gravityScale = 0;
+				}
+				else
+					m_Rigidbody2D.gravityScale = 3;
+
                 // Move the character
                 m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
@@ -93,17 +111,29 @@ namespace UnityStandardAssets._2D
             }
 
             // If the player should jump...
-			if ((m_Grounded || !m_didDoubleJump) && jump)
+			if ((m_Grounded || !m_DidDoubleJump || m_ClimbingLadder) && jump)
 			{
                 m_Grounded = false;
                 m_Anim.SetBool("Ground", false);
+				m_ClimbingLadder = false;
 				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
 
-				if (!m_Grounded && !m_didDoubleJump)
-					m_didDoubleJump = true;
+				if (!m_Grounded && !m_DidDoubleJump)
+					m_DidDoubleJump = true;
             }
         }
 
+		void OnTriggerEnter2D(Collider2D other) {
+			if (other.CompareTag("Ladder")) 
+				m_CanClimb = true;
+		}
+
+		void OnTriggerExit2D(Collider2D other) {
+			if (other.CompareTag("Ladder")) {
+				m_CanClimb = false;
+				m_ClimbingLadder = false;
+			}
+		}
 
         private void Flip()
         {
