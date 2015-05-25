@@ -16,6 +16,7 @@ PlayerSettings:
   cloudProjectId: 
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
+  m_ShowUnitySplashScreen: 1
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
@@ -117,7 +118,8 @@ PlayerSettings:
   iOSLaunchScreenBackgroundColor:
     serializedVersion: 2
     rgba: 0
-  iOSLaunchScreenFillPct: 1
+  iOSLaunchScreenFillPct: 100
+  iOSLaunchScreenSize: 100
   iOSLaunchScreenCustomXibPath: 
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
@@ -130,6 +132,7 @@ PlayerSettings:
   - width: 320
     height: 180
     banner: {fileID: 0}
+  androidGamepadSupportLevel: 0
   resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons:
   - m_BuildTarget: 
@@ -198,7 +201,7 @@ PlayerSettings:
   ps4ApplicationParam2: 0
   ps4ApplicationParam3: 0
   ps4ApplicationParam4: 0
-  ps4Passcode: YdD3ojxSnqPTGfRyilOYGxlSXPtLJboH
+  ps4Passcode: 1O8YFOGKjxRrJBdT3hVOfoaMeAjSWfch
   ps4pnSessions: 1
   ps4pnPresence: 1
   ps4pnFriends: 1
@@ -209,6 +212,7 @@ PlayerSettings:
   psp2NPTrophyPackPath: 
   psp2NPSupportGBMorGJP: 0
   psp2NPAgeRating: 12
+  psp2NPTitleDatPath: 
   psp2NPCommsID: 
   psp2NPCommunicationsID: 
   psp2NPCommsPassphrase: 
@@ -221,8 +225,9 @@ PlayerSettings:
   psp2LiveAreaTrialPath: 
   psp2PatchChangeInfoPath: 
   psp2PatchOriginalPackage: 
-  psp2PackagePassword: 8S4kwIgTxSl1C00GOzOLMrbAyfKUUTsG
+  psp2PackagePassword: oZYFYZ5B6kzMCk8R6BEuZMrF6cI6NX8D
   psp2KeystoneFile: 
+  psp2MemoryExpansionMode: 0
   psp2DRMType: 0
   psp2StorageType: 0
   psp2MediaCapacity: 0
@@ -251,7 +256,16 @@ PlayerSettings:
   psp2InfoBarColor: 0
   psmSplashimage: {fileID: 0}
   spritePackerPolicy: DefaultPackerPolicy
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: CROSS_PLATFORM_INPUT
+    2: CROSS_PLATFORM_INPUT
+    4: CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    7: CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    14: MOBILE_INPUT
+    15: CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    16: CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    17: MOBILE_INPUT
+    20: MOBILE_INPUT
   metroPackageName: _2D v3
   metroPackageLogo: 
   metroPackageLogo140: 
@@ -358,6 +372,7 @@ PlayerSettings:
   XboxOnePackagingOverridePath: 
   XboxOneAppManifestOverridePath: 
   XboxOnePackageEncryption: 0
+  XboxOnePackageUpdateGranularity: 2
   XboxOneDescription: 
   XboxOneIsContentPackage: 0
   XboxOneEnableGPUVariability: 0
