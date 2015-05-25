@@ -26,6 +26,7 @@ namespace UnityStandardAssets._2D
 
         private void Awake()
         {
+			print("Hello!");
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
