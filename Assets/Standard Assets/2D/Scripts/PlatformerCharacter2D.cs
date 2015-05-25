@@ -20,7 +20,7 @@ namespace UnityStandardAssets._2D
 		private bool m_ClimbingLadder;
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-        private Animator m_Anim;            // Reference to the player's animator component.
+        public Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
@@ -114,13 +114,14 @@ namespace UnityStandardAssets._2D
             // If the player should jump...
 			if ((m_Grounded || !m_DidDoubleJump || m_ClimbingLadder) && jump)
 			{
-                m_Grounded = false;
                 m_Anim.SetBool("Ground", false);
 				m_ClimbingLadder = false;
 				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
 
 				if (!m_Grounded && !m_DidDoubleJump)
 					m_DidDoubleJump = true;
+
+                m_Grounded = false;
             }
         }
 
